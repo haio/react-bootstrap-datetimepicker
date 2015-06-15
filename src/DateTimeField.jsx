@@ -20,7 +20,8 @@ DateTimeField = React.createClass({
     defaultText: React.PropTypes.string,
     mode: React.PropTypes.oneOf([Constants.MODE_DATE, Constants.MODE_DATETIME, Constants.MODE_TIME]),
     minDate: React.PropTypes.object,
-    maxDate: React.PropTypes.object
+    maxDate: React.PropTypes.object,
+    placeholder: this.state.placeholder
   },
   getDefaultProps: function() {
     return {
@@ -36,7 +37,7 @@ DateTimeField = React.createClass({
     };
   },
   getInitialState: function() {
-    return {
+    var state =  {
       showDatePicker: this.props.mode !== Constants.MODE_TIME,
       showTimePicker: this.props.mode === Constants.MODE_TIME,
       inputFormat: this.resolvePropsInputFormat(),
@@ -48,9 +49,15 @@ DateTimeField = React.createClass({
         zIndex: '9999 !important'
       },
       viewDate: moment(this.props.dateTime, this.props.format, true).startOf("month"),
-      selectedDate: moment(this.props.dateTime, this.props.format, true),
-      inputValue: typeof this.props.defaultText != 'undefined' ?  this.props.defaultText : moment(this.props.dateTime, this.props.format, true).format(this.resolvePropsInputFormat())
+      selectedDate: moment(this.props.dateTime, this.props.format, true)
     };
+
+    if (this.props.placeholder && !this.props.defaultText) {
+      state.placeholder = this.props.placeholder;
+    } else {
+      state.inputValue = typeof this.props.defaultText != 'undefined' ?  this.props.defaultText : moment(this.props.dateTime, this.props.format, true).format(this.resolvePropsInputFormat());
+    }
+    return state;
   },
   componentWillReceiveProps: function(nextProps) {
     if(moment(nextProps.dateTime, nextProps.format, true).isValid()) {
@@ -332,7 +339,7 @@ DateTimeField = React.createClass({
                   togglePeriod={this.togglePeriod}
             />
             <div className="input-group date" ref="datetimepicker">
-              <input type="text" className="form-control" onChange={this.onChange} value={this.state.inputValue} {...this.props.inputProps}/>
+              <input type="text" className="form-control" onChange={this.onChange} value={this.state.inputValue} placeholder={this.state.placeholder} {...this.props.inputProps}/>
               <span className="input-group-addon" onClick={this.onClick} onBlur={this.onBlur} ref="dtpbutton"><Glyphicon glyph={this.state.buttonIcon} /></span>
             </div>
           </div>
