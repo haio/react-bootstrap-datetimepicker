@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-datetimepicker-placeholder",
-  "version": "0.0.17",
+  "version": "0.0.19",
   "description": "A bootstrap datetime picker component for React.js",
   "homepage": "http://dev.quri.com/react-bootstrap-datetimepicker/",
   "repository": {

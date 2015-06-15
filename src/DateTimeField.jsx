@@ -21,7 +21,7 @@ DateTimeField = React.createClass({
     mode: React.PropTypes.oneOf([Constants.MODE_DATE, Constants.MODE_DATETIME, Constants.MODE_TIME]),
     minDate: React.PropTypes.object,
     maxDate: React.PropTypes.object,
-    placeholder: this.state.placeholder
+    placeholder: React.PropTypes.string
   },
   getDefaultProps: function() {
     return {
